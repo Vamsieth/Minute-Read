@@ -3,7 +3,14 @@ import React, { useState, useEffect } from "react";
 import { copy, linkIcon, loader, tick } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
 
+import { useSpeechSynthesis } from 'react-speech-kit'
+
+
+
 const Demo = () => {
+
+  const {speak} = useSpeechSynthesis();
+
   const [article, setArticle] = useState({
     url: "",
     summary: "",
@@ -128,9 +135,17 @@ const Demo = () => {
         ) : (
           article.summary && (
             <div className='flex flex-col gap-3'>
-              <h2 className='font-satoshi font-bold text-gray-600 text-xl'>
+            <h2 className='font-satoshi font-bold text-gray-600 text-xl'>
                 Article <span className='blue_gradient'>Summary</span>
               </h2>
+
+              <div className="grid place-items-center">
+        
+              <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=> speak({text: article.summary})  }>listen</button>
+
+              </div>
+
+
               <div className='summary_box'>
                 <p className='font-inter font-medium text-sm text-gray-700'>
                   {article.summary}
